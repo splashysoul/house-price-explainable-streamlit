@@ -9,6 +9,7 @@ from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeRegressor
 from sklearn.inspection import PartialDependenceDisplay
 from sklearn.inspection import partial_dependence
 from sklearn.inspection import permutation_importance
@@ -52,7 +53,7 @@ if task == 'Boston House':
   LSTAT	 = col1.number_input(label='duration_ms', min_value=0, max_value=999999,format= '%i',step=1, value=225000)
   
   input_list = [CRIM, ZN, INDUS, CHAS, NOX, RM, AGE, DIS, RAD, TAX, PTRATIO, B, LSTA]
-  df_input = pd.DataFrame([input_list], columns=['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTA'])
+  df_input = pd.DataFrame([input_list], columns=['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT'])
 
 
   
@@ -99,5 +100,9 @@ if task == 'Boston House':
       st.pyplot(force_plot_all)
     
     if model == 'Decision Tree':
-      pass
+      regressor_dt = DecisionTreeRegressor(random_state = 0)
+      regressor_dt.fit(X_train, y_train)
+      st.subheader('partial_dependence')
+      st.subheader('SHAP')
+      st.subheader('LIME')
     
