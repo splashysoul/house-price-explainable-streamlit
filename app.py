@@ -31,40 +31,42 @@ task = st.sidebar.selectbox('Select task', ('Boston House', 'Heart Disease'))
 if task == 'Boston House':
   boston_dataset = load_boston()
   dataset = pd.DataFrame(boston_dataset.data, columns = boston_dataset.feature_names)
+  dataset.drop("B", axis=1, inplace=True)
   dataset['MEDV'] = boston_dataset.target
-  X = dataset.iloc[:, 0:13].values
-  y = dataset.iloc[:, 13].values.reshape(-1,1)
-  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 25)
+  X = dataset.iloc[:, 0:12].values
+  y = dataset.iloc[:, 12].values.reshape(-1,1)
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 25)
 
 if task == 'Boston House':
-  steps = st.sidebar.selectbox('Select ', ('Data Visualization', 'Model Prediction and Explain'))
+  steps = st.sidebar.selectbox('Select ', ('Training Data Visualization', 'Model Prediction and Explain'))
   col1, col2 = st.sidebar.columns(2)
-  CRIM = col1.number_input(label='CRIM', min_value=0.0, max_value=0.1,format='%.6f',step=0.0001, value=0.0001)
-  ZN = col2.number_input(label='ZN', min_value=0, max_value=100,format= '%i',step=1, value=1)
-  INDUS = col1.number_input(label='INDUS', min_value=0.0, max_value=50.0,format= '%.6f',step=0.01, value=0.01)
-  CHAS = col2.number_input(label='CHAS', min_value=0, max_value=1.0,format= '%.6f', step=0.1, value=0.0)
-  NOX = col1.number_input(label='NOX', min_value=0.0, max_value=1.0,format= '%.6f',step=0.001, value=0.0)
-  RM = col2.number_input(label='RM', min_value=0.0, max_value=50.0,format= '%i',step=0.1, value=0.00)
-  AGE = col1.number_input(label='AGE', min_value=0.0, max_value=100.0,format= '%.6f',step=0.001, value=0.05)
-  DIS = col2.number_input(label='DIS', min_value=0.0, max_value=10.00,format= '%.6f',step=0.0001, value=0.01)
-  RAD = col1.number_input(label='RAD', min_value=0.0, max_value=5.0,format= '%.6f',step=0.1, value=0.2)
-  TAX = col2.number_input(label='TAX', min_value=0.0, max_value=500.0,format= '%.6f',step=0.1, value=0.5)
-  PTRATIO = col1.number_input(label='PTRATIO', min_value=0.0, max_value=20.0,format= '%.6f',step=0.1, value=0.5)
-  B = col2.number_input(label='B', min_value=0.0, max_value=10.0,format= '%.6f',step=0.01, value=0.5)
-  LSTAT	 = col1.number_input(label='LSTAT', min_value=0.0, max_value=10.0,format= '%.6f', step=0.01, value=1.0)
+  CRIM = col1.number_input(label='Crime Rate', min_value=0.0, max_value=0.1,format='%.6f',step=0.0001, value=0.0001)
+  ZN = col2.number_input(label='Residential Land Zones', min_value=0, max_value=100,format= '%i',step=1, value=1)
+  INDUS = col1.number_input(label='Non-retail Business Acres', min_value=0.0, max_value=50.0,format= '%.6f',step=0.01, value=0.01)
+  CHAS = col2.number_input(label='Charles River tract bounds', min_value=0.0, max_value=1.0,format= '%.6f', step=0.1, value=0.0)
+  NOX = col1.number_input(label='N.O. Concentration', min_value=0.0, max_value=1.0,format= '%.6f',step=0.001, value=0.0)
+  RM = col2.number_input(label='# of Rooms', min_value=0.0, max_value=50.0,format= '%i',step=0.1, value=0.00)
+  AGE = col1.number_input(label='Age', min_value=0.0, max_value=100.0,format= '%.6f',step=0.001, value=0.05)
+  DIS = col2.number_input(label='Distance to Employment', min_value=0.0, max_value=10.00,format= '%.6f',step=0.0001, value=0.01)
+  RAD = col1.number_input(label='Highway Accessibility', min_value=0.0, max_value=5.0,format= '%.6f',step=0.1, value=0.2)
+  TAX = col2.number_input(label='Property Tax Rate', min_value=0.0, max_value=500.0,format= '%.6f',step=0.1, value=0.5)
+  PTRATIO = col1.number_input(label='Pupil Teacher Ratio', min_value=0.0, max_value=20.0,format= '%.6f',step=0.1, value=0.5
+  LSTAT	 = col1.number_input(label='% Lower Income', min_value=0.0, max_value=10.0,format= '%.6f', step=0.01, value=1.0)
   
-  input_list = [CRIM, ZN, INDUS, CHAS, NOX, RM, AGE, DIS, RAD, TAX, PTRATIO, B, LSTAT]
-  df_input = pd.DataFrame([input_list], columns=['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT'])
+  input_list = [CRIM, ZN, INDUS, CHAS, NOX, RM, AGE, DIS, RAD, TAX, PTRATIO, LSTAT]
+  df_input = pd.DataFrame([input_list], columns=['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'LSTAT'])
 
 
   
-  if steps == 'Data Visualization':
+  if steps == 'Training Data Visualization':
     corr = dataset.corr()
     fig, ax = plt.subplots(figsize=(10, 10))
     sns.heatmap(corr, cmap='RdBu', annot=True, fmt=".2f")
     plt.xticks(range(len(corr.columns)), corr.columns)
     plt.yticks(range(len(corr.columns)), corr.columns)
+    st.subheader('Correlation Plot')
     st.pyplot(fig)
+    st.subheader('Pair Plot')
     fig = sns.pairplot(dataset)
     st.pyplot(fig)
     
