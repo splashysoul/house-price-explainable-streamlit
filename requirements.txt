@@ -1,4 +1,5 @@
 numpy
+numba==0.54.0
 pandas
 streamlit
 shap
