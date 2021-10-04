@@ -57,7 +57,9 @@ if task == 'Boston House':
     
   
   if steps == 'Model Prediction and Explain':
+   
     model = st.sidebar.selectbox('Select model', ('Linear Regression', 'XGBoost', 'Decision Tree', 'Random Forest'))
+    st.write('Change your parameters:')
     col1, col2 = st.sidebar.columns(2)
     CRIM = col1.number_input(label='Crime Rate', min_value=0.0, max_value=0.1,format='%.6f',step=0.0001, value=0.0001)
     ZN = col2.number_input(label='Residential Land Zones', min_value=0, max_value=100,format= '%i',step=1, value=1)
@@ -70,7 +72,7 @@ if task == 'Boston House':
     RAD = col1.number_input(label='Highway Accessibility', min_value=0.0, max_value=5.0,format= '%.6f',step=0.1, value=0.2)
     TAX = col2.number_input(label='Property Tax Rate', min_value=0.0, max_value=500.0,format= '%.6f',step=0.1, value=0.5)
     PTRATIO = col1.number_input(label='Pupil Teacher Ratio', min_value=0.0, max_value=20.0,format= '%.6f',step=0.1, value=0.5)
-    LSTAT	= col1.number_input(label='% Lower Income', min_value=0.0, max_value=10.0,format= '%.6f', step=0.01, value=1.0)
+    LSTAT	= col2.number_input(label='% Lower Income', min_value=0.0, max_value=10.0,format= '%.6f', step=0.01, value=1.0)
   
     input_list = [CRIM, ZN, INDUS, CHAS, NOX, RM, AGE, DIS, RAD, TAX, PTRATIO, LSTAT]
     df_input = pd.DataFrame([input_list], columns=['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'LSTAT'])
@@ -88,17 +90,19 @@ if task == 'Boston House':
     
     if model == 'XGBoost':
       model = xgboost.XGBRegressor().fit(X_train, y_train)
+      predict = model.predict(input_list)
+      st.write(predict)
       explainer = shap.Explainer(model)
       shap_values = explainer(X_train)
       input_shap_values = explainer.shap_values(df_input)
       st.subheader('Force plot')
       shap.force_plot(input_shap_values,  matplotlib=True, show=False)
-      st.pyplot()
+      #st.pyplot()
       
       # visualize the first prediction's explanation
       #shap.plots.waterfall(shap_values[0])
       shap.plots.force(shap_values)
-      st.pyplot()
+      #st.pyplot()
     
     if model == 'Decision Tree':
       regressor_dt = DecisionTreeRegressor(random_state = 0)
