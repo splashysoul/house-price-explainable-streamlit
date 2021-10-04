@@ -92,12 +92,12 @@ if task == 'Boston House':
       input_shap_values = explainer.shap_values(df_input)
       st.subheader('Force plot')
       force_plot = shap.force_plot(explainer.expected_value, input_shap_values)
-      st.pyplot(force_plot)
+      st.write(force_plot)
       
       # visualize the first prediction's explanation
       #shap.plots.waterfall(shap_values[0])
       force_plot_all = shap.plots.force(shap_values)
-      st.pyplot(force_plot_all)
+      st.write(force_plot_all)
     
     if model == 'Decision Tree':
       regressor_dt = DecisionTreeRegressor(random_state = 0)
