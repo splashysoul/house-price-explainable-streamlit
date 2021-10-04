@@ -9,11 +9,14 @@ from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 from sklearn.linear_model import LinearRegression
+from sklearn.inspection import PartialDependenceDisplay
+from sklearn.inspection import partial_dependence
+from sklearn.inspection import permutation_importance
 
 
 import streamlit as st
-import shap
-import LIME
+#import shap
+import lime
 
 
 
