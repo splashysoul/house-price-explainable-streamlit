@@ -10,6 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.inspection import PartialDependenceDisplay
 from sklearn.inspection import partial_dependence
 from sklearn.inspection import permutation_importance
@@ -69,7 +70,8 @@ if task == 'Boston House':
     
   
   if steps == 'Model Prediction and Explain':
-    model = st.sidebar.selectbox('Select model', ('Linear Regression', 'XGBoost', 'Decision Tree'))
+    model = st.sidebar.selectbox('Select model', ('Linear Regression', 'XGBoost', 'Decision Tree', 'Random Forest'))
+regressor_rf.fit(X_train, y_train.ravel())'))
     if model == 'Linear Regression':
       regressor_linear = LinearRegression()
       regressor_linear.fit(X_train, y_train)
@@ -102,6 +104,13 @@ if task == 'Boston House':
     if model == 'Decision Tree':
       regressor_dt = DecisionTreeRegressor(random_state = 0)
       regressor_dt.fit(X_train, y_train)
+      st.subheader('partial_dependence')
+      st.subheader('SHAP')
+      st.subheader('LIME')
+      
+    if model == 'Random Forest' :
+      regressor_rf = RandomForestRegressor(n_estimators = 500, random_state = 0)
+      regressor_rf.fit(X_train, y_train.ravel())
       st.subheader('partial_dependence')
       st.subheader('SHAP')
       st.subheader('LIME')
