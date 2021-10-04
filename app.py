@@ -108,6 +108,8 @@ if task == 'Boston House':
       regressor_rf = RandomForestRegressor(n_estimators = 500, random_state = 0)
       regressor_rf.fit(X_train, y_train.ravel())
       st.subheader('partial_dependence')
+      features = [0, 1, (0, 1)]
+      fig = PartialDependenceDisplay.from_estimator(regressor_rf, X_train, features)
       st.subheader('SHAP')
       st.subheader('LIME')
       
