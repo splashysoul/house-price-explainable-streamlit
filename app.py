@@ -16,7 +16,7 @@ import xgboost
 import lightGBM
 
 import streamlit as st
-#import shap
+import shap
 import lime
 
 
