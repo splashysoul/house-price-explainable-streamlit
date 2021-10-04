@@ -99,4 +99,5 @@ if task == 'Boston House':
       st.pyplot(force_plot_all)
     
     if model == 'Decision Tree':
+      pass
     
