@@ -49,7 +49,7 @@ if task == 'Boston House':
     plt.show()
   
   if steps == 'Model Prediction and Explain':
-    model = st.sidebar.selectbox('Select model', ('linear regression', 'XGBoost', ''))
+    model = st.sidebar.selectbox('Select model', ('linear regression', 'XGBoost', 'Decision Tree'))
     if model == 'linear regression':
       regressor_linear = LinearRegression()
       regressor_linear.fit(X_train, y_train)
@@ -60,7 +60,7 @@ if task == 'Boston House':
       r2_score_linear_test = r2_score(y_test, y_pred_linear_test)
       rmse_linear = (np.sqrt(mean_squared_error(y_test, y_pred_linear_test)))
       st.subheader('Weight Plot')
-     if model == 'XGBoost':
+    if model == 'XGBoost':
       model = xgboost.XGBRegressor().fit(X_train, y_train)
       explainer = shap.Explainer(model)
       shap_values = explainer(X)
