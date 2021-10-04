@@ -39,22 +39,7 @@ if task == 'Boston House':
 
 if task == 'Boston House':
   steps = st.sidebar.selectbox('Select ', ('Training Data Visualization', 'Model Prediction and Explain'))
-  col1, col2 = st.sidebar.columns(2)
-  CRIM = col1.number_input(label='Crime Rate', min_value=0.0, max_value=0.1,format='%.6f',step=0.0001, value=0.0001)
-  ZN = col2.number_input(label='Residential Land Zones', min_value=0, max_value=100,format= '%i',step=1, value=1)
-  INDUS = col1.number_input(label='Non-retail Business Acres', min_value=0.0, max_value=50.0,format= '%.6f',step=0.01, value=0.01)
-  CHAS = col2.number_input(label='Charles River tract bounds', min_value=0.0, max_value=1.0,format= '%.6f', step=0.1, value=0.0)
-  NOX = col1.number_input(label='N.O. Concentration', min_value=0.0, max_value=1.0,format= '%.6f',step=0.001, value=0.0)
-  RM = col2.number_input(label='# of Rooms', min_value=0.0, max_value=50.0,format= '%i',step=0.1, value=0.00)
-  AGE = col1.number_input(label='Age', min_value=0.0, max_value=100.0,format= '%.6f',step=0.001, value=0.05)
-  DIS = col2.number_input(label='Distance to Employment', min_value=0.0, max_value=10.00,format= '%.6f',step=0.0001, value=0.01)
-  RAD = col1.number_input(label='Highway Accessibility', min_value=0.0, max_value=5.0,format= '%.6f',step=0.1, value=0.2)
-  TAX = col2.number_input(label='Property Tax Rate', min_value=0.0, max_value=500.0,format= '%.6f',step=0.1, value=0.5)
-  PTRATIO = col1.number_input(label='Pupil Teacher Ratio', min_value=0.0, max_value=20.0,format= '%.6f',step=0.1, value=0.5)
-  LSTAT	 = col1.number_input(label='% Lower Income', min_value=0.0, max_value=10.0,format= '%.6f', step=0.01, value=1.0)
   
-  input_list = [CRIM, ZN, INDUS, CHAS, NOX, RM, AGE, DIS, RAD, TAX, PTRATIO, LSTAT]
-  df_input = pd.DataFrame([input_list], columns=['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'LSTAT'])
 
 
   
@@ -73,6 +58,22 @@ if task == 'Boston House':
   
   if steps == 'Model Prediction and Explain':
     model = st.sidebar.selectbox('Select model', ('Linear Regression', 'XGBoost', 'Decision Tree', 'Random Forest'))
+    col1, col2 = st.sidebar.columns(2)
+    CRIM = col1.number_input(label='Crime Rate', min_value=0.0, max_value=0.1,format='%.6f',step=0.0001, value=0.0001)
+    ZN = col2.number_input(label='Residential Land Zones', min_value=0, max_value=100,format= '%i',step=1, value=1)
+    INDUS = col1.number_input(label='Non-retail Business Acres', min_value=0.0, max_value=50.0,format= '%.6f',step=0.01, value=0.01)
+    CHAS = col2.number_input(label='Charles River tract bounds', min_value=0.0, max_value=1.0,format= '%.6f', step=0.1, value=0.0)
+    NOX = col1.number_input(label='N.O. Concentration', min_value=0.0, max_value=1.0,format= '%.6f',step=0.001, value=0.0)
+    RM = col2.number_input(label='# of Rooms', min_value=0.0, max_value=50.0,format= '%.6f',step=0.1, value=0.00)
+    AGE = col1.number_input(label='Age', min_value=0.0, max_value=100.0,format= '%.6f',step=0.001, value=0.05)
+    DIS = col2.number_input(label='Distance to Employment', min_value=0.0, max_value=10.00,format= '%.6f',step=0.0001, value=0.01)
+    RAD = col1.number_input(label='Highway Accessibility', min_value=0.0, max_value=5.0,format= '%.6f',step=0.1, value=0.2)
+    TAX = col2.number_input(label='Property Tax Rate', min_value=0.0, max_value=500.0,format= '%.6f',step=0.1, value=0.5)
+    PTRATIO = col1.number_input(label='Pupil Teacher Ratio', min_value=0.0, max_value=20.0,format= '%.6f',step=0.1, value=0.5)
+    LSTAT	 = col1.number_input(label='% Lower Income', min_value=0.0, max_value=10.0,format= '%.6f', step=0.01, value=1.0)
+  
+  input_list = [CRIM, ZN, INDUS, CHAS, NOX, RM, AGE, DIS, RAD, TAX, PTRATIO, LSTAT]
+  df_input = pd.DataFrame([input_list], columns=['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'LSTAT'])
     
     if model == 'Linear Regression':
       regressor_linear = LinearRegression()
@@ -91,8 +92,8 @@ if task == 'Boston House':
       shap_values = explainer(X_train)
       input_shap_values = explainer.shap_values(df_input)
       st.subheader('Force plot')
-      force_plot = shap.force_plot(explainer.expected_value, input_shap_values)
-      st.write(force_plot)
+      plot = shap.force_plot(explainer.expected_value, input_shap_values,  matplotlib=True, show=False)
+      st.pyplot(plot)
       
       # visualize the first prediction's explanation
       #shap.plots.waterfall(shap_values[0])
@@ -112,6 +113,7 @@ if task == 'Boston House':
       st.subheader('partial_dependence')
       features = [0, 1, (0, 1)]
       fig = PartialDependenceDisplay.from_estimator(regressor_rf, X_train, features)
+      st.write(fig)
       st.subheader('SHAP')
       st.subheader('LIME')
       
