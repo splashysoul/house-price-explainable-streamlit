@@ -39,7 +39,7 @@ if task == 'Boston House':
 if task == 'Boston House':
   steps = st.sidebar.selectbox('Select ', ('Data Visualization', 'Model Prediction and Explain'))
   col1, col2 = st.sidebar.columns(2)
-  CRIM = col1.number_input(label='CRIM', min_value=0, max_value=1,format='%i',step=1, value=0.001)
+  CRIM = col1.number_input(label='CRIM', min_value=0.0, max_value=0.1,format='%.6f',step=0.0001, value=0.0001)
   ZN = col2.number_input(label='ZN', min_value=0, max_value=100,format= '%i',step=1, value=1)
   INDUS = col1.number_input(label='INDUS', min_value=0.0, max_value=50.0,format= '%.6f',step=0.01, value=0.01)
   CHAS = col2.number_input(label='CHAS', min_value=0, max_value=1.0,format= '%.6f', step=0.1, value=0.0)
