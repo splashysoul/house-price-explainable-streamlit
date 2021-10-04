@@ -83,6 +83,7 @@ if task == 'Boston House':
     if model == 'XGBoost':
       model = xgboost.XGBRegressor().fit(X_train, y_train)
       explainer = shap.Explainer(model)
+      shap_values = explainer(X_train)
       input_shap_values = explainer.shap_values(df_input)
       st.subheader('Force plot')
       force_plot = shap.force_plot(explainer.expected_value[np.argmax(input_preds_proba)],
@@ -94,6 +95,8 @@ if task == 'Boston House':
       
       # visualize the first prediction's explanation
       #shap.plots.waterfall(shap_values[0])
+      force_plot_all = shap.plots.force(shap_values)
+      st.pyplot(force_plot_all)
     
     if model == 'Decision Tree':
     
