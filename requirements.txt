@@ -2,7 +2,7 @@ numpy==1.20
 numba==0.54.0
 pandas
 streamlit
-shap
+shap==0.39.0
 seaborn
 matplotlib
 sklearn
