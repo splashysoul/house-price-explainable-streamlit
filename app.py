@@ -50,7 +50,7 @@ if task == 'Boston House':
   DIS = col2.number_input(label='Distance to Employment', min_value=0.0, max_value=10.00,format= '%.6f',step=0.0001, value=0.01)
   RAD = col1.number_input(label='Highway Accessibility', min_value=0.0, max_value=5.0,format= '%.6f',step=0.1, value=0.2)
   TAX = col2.number_input(label='Property Tax Rate', min_value=0.0, max_value=500.0,format= '%.6f',step=0.1, value=0.5)
-  PTRATIO = col1.number_input(label='Pupil Teacher Ratio', min_value=0.0, max_value=20.0,format= '%.6f',step=0.1, value=0.5
+  PTRATIO = col1.number_input(label='Pupil Teacher Ratio', min_value=0.0, max_value=20.0,format= '%.6f',step=0.1, value=0.5)
   LSTAT	 = col1.number_input(label='% Lower Income', min_value=0.0, max_value=10.0,format= '%.6f', step=0.01, value=1.0)
   
   input_list = [CRIM, ZN, INDUS, CHAS, NOX, RM, AGE, DIS, RAD, TAX, PTRATIO, LSTAT]
