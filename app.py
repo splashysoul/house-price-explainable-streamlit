@@ -38,20 +38,20 @@ if task == 'Boston House':
 
 if task == 'Boston House':
   steps = st.sidebar.selectbox('Select ', ('Data Visualization', 'Model Prediction and Explain'))
-  col1, col2 = st.sidebar.beta_columns(2)
-  CRIM = col1.number_input(label='CRIM', min_value=0, max_value=100,format='%i',step=1, value=20)
-  ZN = col2.number_input(label='ZN', min_value=0.0, max_value=1.0,format= '%.6f',step=0.000001, value=0.5)
-  INDUS = col1.number_input(label='energy', min_value=0.0, max_value=1.0,format= '%.6f',step=0.000001, value=0.5)
-  CHAS = col2.number_input(label='key', min_value=0, max_value=11,format= '%i', value=0)
-  NOX = col1.number_input(label='loudness', min_value=-50.0, max_value=2.0,format= '%.6f',step=0.000001, value=-6.0)
-  RM = col2.number_input(label='mode', min_value=0, max_value=1,format= '%i',step=1, value=0)
-  AGE = col1.number_input(label='speechiness', min_value=0.0, max_value=1.0,format= '%.6f',step=0.000001, value=0.5)
-  DIS = col2.number_input(label='acousticness', min_value=0.0, max_value=1.00,format= '%.6f',step=0.000001, value=0.5)
-  RAD = col1.number_input(label='instrumentalness', min_value=0.0, max_value=1.0,format= '%.6f',step=0.000001, value=0.5)
-  TAX = col2.number_input(label='liveness', min_value=0.0, max_value=1.0,format= '%.6f',step=0.000001, value=0.5)
-  PTRATIO = col1.number_input(label='valence', min_value=0.0, max_value=1.0,format= '%.6f',step=0.000001, value=0.5)
-  B = col2.number_input(label='tempo', min_value=0.0, max_value=300.0,format= '%.6f',step=0.000001, value=120.0)
-  LSTAT	 = col1.number_input(label='duration_ms', min_value=0, max_value=999999,format= '%i',step=1, value=225000)
+  col1, col2 = st.sidebar.columns(2)
+  CRIM = col1.number_input(label='CRIM', min_value=0, max_value=1,format='%i',step=1, value=0.001)
+  ZN = col2.number_input(label='ZN', min_value=0, max_value=100,format= '%i',step=1, value=1)
+  INDUS = col1.number_input(label='INDUS', min_value=0.0, max_value=50.0,format= '%.6f',step=0.01, value=0.01)
+  CHAS = col2.number_input(label='CHAS', min_value=0, max_value=1.0,format= '%.6f', step=0.1, value=0.0)
+  NOX = col1.number_input(label='NOX', min_value=0.0, max_value=1.0,format= '%.6f',step=0.001, value=0.0)
+  RM = col2.number_input(label='RM', min_value=0.0, max_value=50.0,format= '%i',step=0.1, value=0.00)
+  AGE = col1.number_input(label='AGE', min_value=0.0, max_value=100.0,format= '%.6f',step=0.001, value=0.05)
+  DIS = col2.number_input(label='DIS', min_value=0.0, max_value=10.00,format= '%.6f',step=0.0001, value=0.01)
+  RAD = col1.number_input(label='RAD', min_value=0.0, max_value=5.0,format= '%.6f',step=0.1, value=0.2)
+  TAX = col2.number_input(label='TAX', min_value=0.0, max_value=500.0,format= '%.6f',step=0.1, value=0.5)
+  PTRATIO = col1.number_input(label='PTRATIO', min_value=0.0, max_value=20.0,format= '%.6f',step=0.1, value=0.5)
+  B = col2.number_input(label='B', min_value=0.0, max_value=10.0,format= '%.6f',step=0.01, value=0.5)
+  LSTAT	 = col1.number_input(label='LSTAT', min_value=0.0, max_value=10.0,format= '%.6f', step=0.01, value=1.0)
   
   input_list = [CRIM, ZN, INDUS, CHAS, NOX, RM, AGE, DIS, RAD, TAX, PTRATIO, B, LSTAT]
   df_input = pd.DataFrame([input_list], columns=['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT'])
@@ -89,9 +89,7 @@ if task == 'Boston House':
       shap_values = explainer(X_train)
       input_shap_values = explainer.shap_values(df_input)
       st.subheader('Force plot')
-      force_plot = shap.plots.force(input_shap_values,
-                    matplotlib=True,
-                    show=False)
+      force_plot = shap.force_plot(explainer.expected_value, input_shap_values)
       st.pyplot(force_plot)
       
       # visualize the first prediction's explanation
