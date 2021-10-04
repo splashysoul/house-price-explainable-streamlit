@@ -71,7 +71,7 @@ if task == 'Boston House':
   
   if steps == 'Model Prediction and Explain':
     model = st.sidebar.selectbox('Select model', ('Linear Regression', 'XGBoost', 'Decision Tree', 'Random Forest'))
-regressor_rf.fit(X_train, y_train.ravel())'))
+    
     if model == 'Linear Regression':
       regressor_linear = LinearRegression()
       regressor_linear.fit(X_train, y_train)
@@ -114,4 +114,5 @@ regressor_rf.fit(X_train, y_train.ravel())'))
       st.subheader('partial_dependence')
       st.subheader('SHAP')
       st.subheader('LIME')
+      
     
