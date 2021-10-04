@@ -12,7 +12,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.inspection import PartialDependenceDisplay
 from sklearn.inspection import partial_dependence
 from sklearn.inspection import permutation_importance
-
+import xgboost
+import lightGBM
 
 import streamlit as st
 #import shap
@@ -58,3 +59,13 @@ if task == 'Boston House':
       y_pred_linear_test = regressor_linear.predict(X_test)
       r2_score_linear_test = r2_score(y_test, y_pred_linear_test)
       rmse_linear = (np.sqrt(mean_squared_error(y_test, y_pred_linear_test)))
+      st.subheader('Weight Plot')
+     if model == 'XGBoost':
+      model = xgboost.XGBRegressor().fit(X_train, y_train)
+      explainer = shap.Explainer(model)
+      shap_values = explainer(X)
+      
+      shap.plots.waterfall(shap_values[0])
+
+# visualize the first prediction's explanation
+shap.plots.waterfall(shap_values[0])
