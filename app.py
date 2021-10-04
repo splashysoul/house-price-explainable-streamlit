@@ -49,10 +49,9 @@ if task == 'Boston House':
     if model == 'linear regression':
       regressor_linear = LinearRegression()
       regressor_linear.fit(X_train, y_train)
-
-cv_linear = cross_val_score(estimator = regressor_linear, X = X_train, y = y_train, cv = 10)
-y_pred_linear_train = regressor_linear.predict(X_train)
-r2_score_linear_train = r2_score(y_train, y_pred_linear_train)
-y_pred_linear_test = regressor_linear.predict(X_test)
-r2_score_linear_test = r2_score(y_test, y_pred_linear_test)
-rmse_linear = (np.sqrt(mean_squared_error(y_test, y_pred_linear_test)))
+      cv_linear = cross_val_score(estimator = regressor_linear, X = X_train, y = y_train, cv = 10)
+      y_pred_linear_train = regressor_linear.predict(X_train)
+      r2_score_linear_train = r2_score(y_train, y_pred_linear_train)
+      y_pred_linear_test = regressor_linear.predict(X_test)
+      r2_score_linear_test = r2_score(y_test, y_pred_linear_test)
+      rmse_linear = (np.sqrt(mean_squared_error(y_test, y_pred_linear_test)))
