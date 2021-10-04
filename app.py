@@ -53,7 +53,7 @@ if task == 'Boston House':
   B = col2.number_input(label='tempo', min_value=0.0, max_value=300.0,format= '%.6f',step=0.000001, value=120.0)
   LSTAT	 = col1.number_input(label='duration_ms', min_value=0, max_value=999999,format= '%i',step=1, value=225000)
   
-  input_list = [CRIM, ZN, INDUS, CHAS, NOX, RM, AGE, DIS, RAD, TAX, PTRATIO, B, LSTA]
+  input_list = [CRIM, ZN, INDUS, CHAS, NOX, RM, AGE, DIS, RAD, TAX, PTRATIO, B, LSTAT]
   df_input = pd.DataFrame([input_list], columns=['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT'])
 
 
