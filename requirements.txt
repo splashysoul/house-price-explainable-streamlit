@@ -5,3 +5,4 @@ shap
 seaborn
 matplotlib
 sklearn
+lime
