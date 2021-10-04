@@ -89,9 +89,7 @@ if task == 'Boston House':
       shap_values = explainer(X_train)
       input_shap_values = explainer.shap_values(df_input)
       st.subheader('Force plot')
-      force_plot = shap.force_plot(explainer.expected_value[np.argmax(input_preds_proba)],
-                    input_shap_values[np.argmax(input_preds_proba)],
-                    eval_set_features,
+      force_plot = shap.plots.force(input_shap_values,
                     matplotlib=True,
                     show=False)
       st.pyplot(force_plot)
